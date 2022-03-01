@@ -8,13 +8,20 @@ metadata:
     app: postgres
 spec:
   storageClassName: manual
-  volumeMode: Filesystem
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
   local:
     path: "/mnt/data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-desktop
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

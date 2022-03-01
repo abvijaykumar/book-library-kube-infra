@@ -7,12 +7,13 @@ metadata:
     type: local
     app: postgres
 spec:
-  storageClassName: local
+  storageClassName: manual
+  volumeMode: Filesystem
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  hostPath:
+  local:
     path: "/mnt/data"
 ---
 kind: PersistentVolumeClaim

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: book-library-service
-          image: abvijaykumar/bozo-book-library-service:v1
+          image: abvijaykumar/bozo-book-library-service:10
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

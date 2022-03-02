@@ -13,7 +13,7 @@ spec:
   accessModes:
     - ReadWriteMany
   local:
-    path: "/mnt/data"
+    path: "/Users/vijaykumarab/mnt/data"
   nodeAffinity:
     required:
       nodeSelectorTerms:

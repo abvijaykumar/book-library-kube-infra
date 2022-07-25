@@ -28,8 +28,7 @@ spec:
       volumes:
         - name: postgredb
           persistentVolumeClaim:
-            claimName: book-library-postgres-db-pv-claim
-
+            claimName:  book-library-postgres-db-pv-claim
 ---
 apiVersion: v1
 kind: Service

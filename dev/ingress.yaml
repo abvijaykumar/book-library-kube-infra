@@ -4,6 +4,7 @@ metadata:
   name: bozo-book-library-ingress
   namespace: bozo-book-library-dev
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:

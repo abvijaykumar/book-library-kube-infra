@@ -5,6 +5,7 @@ metadata:
   namespace: bozo-book-library-dev
 spec:
   replicas: 1
+  
   selector: 
     matchLabels:
       app: book-library-postgres-db
@@ -13,6 +14,7 @@ spec:
       labels:
         app: book-library-postgres-db
     spec:
+      serviceAccountName: bozo-book-service-account
       containers:
         - name: postgres
           image: postgres:10.4

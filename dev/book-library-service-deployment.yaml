@@ -6,6 +6,7 @@ metadata:
   namespace: bozo-book-library-dev
 spec:
   replicas: 1
+  
   selector: 
     matchLabels:
       app: book-library-service
@@ -16,6 +17,7 @@ spec:
         app: book-library-service
         namespace: bozo-book-library-dev
     spec:
+      serviceAccountName: bozo-book-service-account
       containers:
         - name: book-library-service
           image: abvijaykumar/bozo-book-library-service:latest

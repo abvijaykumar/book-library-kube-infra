@@ -1,0 +1,1 @@
+kubectl label namespace bozo-book-library-dev istio-injection=enabled

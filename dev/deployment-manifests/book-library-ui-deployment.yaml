@@ -4,9 +4,10 @@ kind: Deployment
 metadata:
   name: book-library-ui-deployments
   namespace: bozo-book-library-dev
+  labels: 
+    application: bozo-book-library  
 spec:
   replicas: 1
-  
   selector: 
     matchLabels:
       app: book-library-ui-service
@@ -36,7 +37,8 @@ kind: Service
 metadata:
   name: book-library-ui-svc
   namespace: bozo-book-library-dev
-
+  labels: 
+    application: bozo-book-library
 spec:
   selector: 
     app: book-library-ui-service

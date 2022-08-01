@@ -1,0 +1,15 @@
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  interval: 30s
+  telemetryPath: /metrics
+  labels:
+    release: prometheus 
+config:
+  datasource:
+    host: 
+    user: postgres
+    password: ""
+    port: "5432"
+    database: 'postgres'
+    sslmode: disable

@@ -1,0 +1,15 @@
+# If serviceMonitor.multipleTarget is enabled, this configuration is actually not used
+redisAddress: redis://redis-cache-service.bozo-book-library-dev.svc.cluster.local:6379
+
+labels: 
+  release: prometheus
+
+serviceMonitor:
+  # When set true then use a ServiceMonitor to configure scraping
+  enabled: true
+  multipleTarget: false
+  namespace: monitoring
+  interval: 30s
+  telemetryPath: /metrics
+  labels:
+    release: prometheus

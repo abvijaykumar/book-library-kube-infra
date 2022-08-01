@@ -3,9 +3,10 @@ kind: Deployment
 metadata:
   name: book-library-postgres-db
   namespace: bozo-book-library-dev
+  labels: 
+    application: bozo-book-library  
 spec:
   replicas: 1
-  
   selector: 
     matchLabels:
       app: book-library-postgres-db
@@ -39,6 +40,7 @@ metadata:
   namespace: bozo-book-library-dev
   labels:
     app: book-library-postgres-db-svc
+    application: bozo-book-library
 spec:
   type: NodePort
   ports:

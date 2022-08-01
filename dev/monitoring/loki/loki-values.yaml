@@ -1,0 +1,10 @@
+loki:
+  enabled: true
+  isDefault: true
+  persistence:
+    enables: true
+    storageClassName: local-storage
+    size: 1Gi
+
+promtail:
+  enabled: true

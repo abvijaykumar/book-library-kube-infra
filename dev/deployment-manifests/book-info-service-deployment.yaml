@@ -3,9 +3,10 @@ kind: Deployment
 metadata:
   name: book-info-service-deployments
   namespace: bozo-book-library-dev
+  labels: 
+    application: bozo-book-library
 spec:
   replicas: 1
-  
   selector: 
     matchLabels:
       app: book-info-service
@@ -30,7 +31,8 @@ kind: Service
 metadata:
   name: book-info-service-svc
   namespace: bozo-book-library-dev
-
+  labels: 
+    application: bozo-book-library
 spec:
   type: NodePort
   selector: 

@@ -1,3 +1,4 @@
 
 .DS_Store
 token.txt
+dev/monitoring/alert-manager/slack.config

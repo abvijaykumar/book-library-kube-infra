@@ -1,0 +1,12 @@
+loki:
+  enabled: true
+  isDefault: true
+
+promtail:
+  enabled: true
+  config:
+    logLevel: info
+    serverPort: 3101
+    clients:
+      - url: http://{{ .Release.Name }}:3100/loki/api/v1/push
+

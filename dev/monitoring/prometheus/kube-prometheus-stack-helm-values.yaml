@@ -1,0 +1,110 @@
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    path: /grafana
+  
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true
+
+
+
+
+additionalPrometheusRulesMap: 
+  rule-name: 
+    groups:
+      - name: AllInstances
+        rules:
+        - alert: InstanceDown
+          # Condition for alerting
+          expr: up == 0
+          for: 1m
+          # Annotation - additional informational labels to store more information
+          annotations:
+            title: 'Instance {{ $labels.instance }} down'
+            description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
+          # Labels - additional labels to be attached to the alert
+          labels:
+              severity: 'critical'
+
+
+alertmanager:
+  enabled: true
+  ## Alertmanager configuration directives
+  ## ref: https://prometheus.io/docs/alerting/configuration/#configuration-file
+  ##      https://prometheus.io/webtools/alerting/routing-tree-editor/
+  ##
+
+  config:
+    global:
+      resolve_timeout: 1m
+      slack_api_url: 'https://hooks.slack.com/services/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'
+    inhibit_rules:
+      - source_matchers:
+          - 'severity = critical'
+        target_matchers:
+          - 'severity =~ warning|info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'severity = warning'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'alertname = InfoInhibitor'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+    route:
+      group_by: ['namespace']
+      group_wait: 30s
+      group_interval: 1m
+      repeat_interval: 1m
+      receiver: 'slack'
+      routes:
+      - receiver: 'slack'
+        matchers:
+          - alertname =~ "InfoInhibitor|Watchdog"
+    receivers:
+    - name: 'slack'
+      slack_configs:
+      - channel: '#general'
+        send_resolved: true
+    - name: 'default-catchall-slack'
+      slack_configs:
+        - send_resolved: true
+          channel: "__SLACK_CHANNEL__"
+          title: '{{ if eq .Status "firing" }}:flushed:{{ else }}:sunglasses:{{ end }} [{{ .Status | toUpper }}] {{ .CommonAnnotations.summary }} (catchall)'
+          text: "{{ range .Alerts }}*Priority*: `{{ .Labels.severity | toUpper }}`\nInstance: {{ .Labels.instance }}\n{{ .Annotations.description }}\n{{ end }}"
+
+    - name: 'warning-devops-slack'
+      slack_configs:
+        - send_resolved: true
+          channel: '__SLACK_CHANNEL__'
+          title: '{{ if eq .Status "firing" }}:fire:{{ else }}:white_check_mark:{{ end }} [{{ .Status | toUpper }}] {{ .CommonAnnotations.title }} '
+          text: >-
+            {{ range .Alerts }}
+              *Description:* {{ .Annotations.description }}
+              *Severity:* `{{ .Labels.severity }}`
+              *Graph:* {{ if eq .Labels.category "logs" }}<{{ .Annotations.logurl }}|:chart_with_upwards_trend:>{{ else }}<{{ .GeneratorURL }}|:chart_with_upwards_trend:>{{ end }} *Dashboard:* <{{ .Annotations.dashboard }}|:bar_chart:> *Runbook:* <{{ .Annotations.runbook }}|:spiral_note_pad:>
+              *Details:*
+              {{ range .Labels.SortedPairs }} - *{{ .Name }}:* `{{ .Value }}`
+              {{ end }}
+              - *Impact*: {{ .Annotations.impact }}
+              - *Receiver*: warning-{{ .Labels.team }}-slack
+            {{ end }}
+    templates:
+    - '/etc/alertmanager/config/*.tmpl'
+

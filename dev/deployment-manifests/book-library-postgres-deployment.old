@@ -3,16 +3,6 @@ kind: Deployment
 metadata:
   name: book-library-postgres-db
   namespace: bozo-book-library-dev
-  annotations:
-    vault.hashicorp.com/agent-inject: 'true'
-    vault.hashicorp.com/role: 'bozobooks'
-    vault.hashicorp.com/agent-inject-secret-config: 'kv/secret/bozobooks/postgres-config'
-    vault.hashicorp.com/agent-inject-template-config: |
-          {{ with secret "kv/secret/bozobooks/postgres-config" -}}
-            export POSTGRES_DB="{{ .Data.data.POSTGRES_DB }}"
-            export POSTGRES_USER="{{ .Data.data.POSTGRES_USER }}"
-            export POSTGRES_PASSWORD="{{ .Data.data.POSTGRES_PASSWORD }}"
-          {{- end }}
   labels: 
     application: bozo-book-library  
 spec:
@@ -32,7 +22,9 @@ spec:
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
-    
+          envFrom:
+            - configMapRef:
+                name: book-library-postgres-db-config
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb

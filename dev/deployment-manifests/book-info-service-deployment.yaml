@@ -5,30 +5,30 @@ metadata:
   namespace: bozo-book-library-dev
   annotations:
     vault.hashicorp.com/agent-inject: 'true'
-    vault.hashicorp.com/role: 'bozobooks'
-    vault.hashicorp.com/agent-inject-secret-config: 'bozobooks/data/googleapi-config'
+    vault.hashicorp.com/role: bozobooks
+    vault.hashicorp.com/agent-inject-secret-config: bozobooks/data/googleapi-config
     vault.hashicorp.com/agent-inject-template-config: |
-          {{ with secret "bozobooks/data/googleapi-config" -}}
-            export googleapikey="{{ .Data.data.googleapikey }}"
-          {{- end }}
-  labels: 
+      {{ with secret "bozobooks/data/googleapi-config" -}}
+        export googleapikey="{{ .Data.data.googleapikey }}"
+      {{- end }}
+  labels:
     application: bozo-book-library
 spec:
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
       app: book-info-service
       namespace: bozo-book-library-dev
   template:
     metadata:
-      labels: 
+      labels:
         app: book-info-service
         namespace: bozo-book-library-dev
     spec:
       serviceAccountName: bozo-book-service-account
       containers:
         - name: book-info-service
-          image: abvijaykumar/bozo-bookinfo-service:latest
+          image: 'abvijaykumar/bozo-book-info-service:'
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

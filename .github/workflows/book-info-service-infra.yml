@@ -34,4 +34,5 @@ jobs:
           propertyPath: 'spec.template.spec.containers[1].image'
           value: 'abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}}'
           token: ${{secrets.API_TOKEN_GITHUB}}
+          masterBranchName: 'main'
           message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}} ' 

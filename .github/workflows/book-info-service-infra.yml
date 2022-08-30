@@ -36,4 +36,4 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-          echo "version: ${{github.event.client_payload.buildnumber}}" 
+          echo "Build Number: ${{github.event.client_payload.buildnumber}}" 

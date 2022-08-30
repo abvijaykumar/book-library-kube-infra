@@ -33,4 +33,5 @@ jobs:
           valueFile: 'dev/deployment-manifests/book-info-service-deployment.yaml'
           propertyPath: 'spec.template.spec.containers[1].image'
           value: 'abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}}'
+          token: ${{secrets.API_TOKEN_GITHUB}}
           message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}} ' 

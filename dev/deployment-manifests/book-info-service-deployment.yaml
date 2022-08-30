@@ -28,7 +28,7 @@ spec:
       serviceAccountName: bozo-book-service-account
       containers:
         - name: book-info-service
-          image: abvijaykumar/bozo-bookinfo-service:38
+          image: abvijaykumar/bozo-bookinfo-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

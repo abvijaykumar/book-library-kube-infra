@@ -1,0 +1,3 @@
+Unable to create application: 
+application spec for bozobooks is invalid: 
+InvalidSpecError: Unable to generate manifests in dev: rpc error: code = FailedPrecondition desc = Failed to unmarshal "cluster-keys.json": Object 'Kind' is missing in '{ "unseal_keys_b64": [ "zzr+oQ0MF5uFsg0AJlbUKm5SnZpcOjOK3tlsv6pkVpc=" ], "unseal_keys_hex": [ "cf3afea10d0c179b85b20d002656d42a6e529d9a5c3a338aded96cbfaa645697" ], "unseal_shares": 1, "unseal_threshold": 1, "recovery_keys_b64": [], "recovery_keys_hex": [], "recovery_keys_shares": 5, "recovery_keys_threshold": 3, "root_token": "hvs.t8U1UuRtYZkc0I4tuY1uE1sY" }'

@@ -35,6 +35,4 @@ jobs:
           value: 'abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}}'
           token: ${{secrets.API_TOKEN_GITHUB}}
           masterBranchName: 'main'
-          branch: 'main'
-          targetBranch: 'main'
           message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}} ' 

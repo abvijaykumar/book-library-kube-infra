@@ -31,11 +31,8 @@ jobs:
         uses: fjogeleit/yaml-update-action@main
         with:
           valueFile: 'dev/deployment-manifests/book-info-service-deployment.yaml'
-          propertyPath: 'spec.template.spec.containers[1].image'
-          value: 'abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}}'
-          token: ${{secrets.API_TOKEN_GITHUB}}
-          masterBranchName: main
-          branch: main
-          targetBranch: main
-          createPR: 'false'
-          message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{github.event.client_payload.buildnumber}} ' 
+          propertyPath: 'spec.template.spec.containers[0].image'
+          value: 'abvijaykumar/bozo-book-info-service:${{ inputs.number }}'
+          masterBranchName: 'main'
+          branch: 'main'
+          message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{ inputs.number }}' 

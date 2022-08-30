@@ -32,7 +32,7 @@ jobs:
         with:
           valueFile: 'dev/deployment-manifests/book-info-service-deployment.yaml'
           propertyPath: 'spec.template.spec.containers[0].image'
-          value: 'abvijaykumar/bozo-book-info-service:${{ inputs.number }}'
+          value: 'abvijaykumar/bozo-book-info-service:${{ github.event.client_payload.buildnumber}}'
           masterBranchName: 'main'
           branch: 'main'
-          message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{ inputs.number }}' 
+          message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{ github.event.client_payload.buildnumber }}' 

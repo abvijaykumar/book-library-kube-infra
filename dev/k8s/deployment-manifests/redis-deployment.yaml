@@ -17,7 +17,7 @@ spec:
         app: redis-cache-service
         namespace: bozo-book-library-dev
     spec:
-      serviceAccountName: bozo-book-service-account
+      serviceAccountName: bozobooks-app
       containers:
         - name: redis-cache-service
           image: redis

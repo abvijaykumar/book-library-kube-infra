@@ -25,7 +25,7 @@ spec:
       labels:
         app: book-library-postgres-db
     spec:
-      serviceAccountName: bozo-book-service-account
+      serviceAccountName: bozobooks-app
       containers:
         - name: postgres
           image: postgres:10.4

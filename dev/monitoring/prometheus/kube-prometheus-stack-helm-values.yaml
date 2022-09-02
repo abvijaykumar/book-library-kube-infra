@@ -1,4 +1,15 @@
 grafana:
+  enabled: true
+  
+  persistence:
+    enabled: true
+    type: pvc
+    accessModes:
+    - ReadWriteOnce
+    size: 4Gi
+    finalizers:
+    - kubernetes.io/pvc-protection
+
   ingress:
     enabled: true
     ingressClassName: nginx
@@ -32,7 +43,9 @@ additionalPrometheusRulesMap:
             description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
           # Labels - additional labels to be attached to the alert
           labels:
-              severity: 'critical'
+            application: 'bozobooks'
+            source: 'prometheus'
+
 
 
 alertmanager:

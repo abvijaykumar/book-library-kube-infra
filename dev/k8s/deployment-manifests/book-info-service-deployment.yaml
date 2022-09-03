@@ -3,13 +3,6 @@ kind: Deployment
 metadata:
   name: book-info-service-deployments
   namespace: bozo-book-library-dev
-  annotations:
-    vault.hashicorp.com/agent-inject: 'true'
-    vault.hashicorp.com/agent-inject-secret-config: 'bozobooks/data/googleapi-config'
-    vault.hashicorp.com/agent-inject-template-config: |
-      {{ with secret "bozobooks/data/googleapi-config" -}}
-        export googleapikey="{{ .Data.data.googleapikey }}"
-      {{- end }}
   labels:
     application: bozo-book-library
 spec:
@@ -20,6 +13,14 @@ spec:
       namespace: bozo-book-library-dev
   template:
     metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/role: 'bozobooks-app'
+        vault.hashicorp.com/agent-inject-secret-config: 'bozobooks/data/googleapi-config'
+        vault.hashicorp.com/agent-inject-template-config: |
+          {{ with secret "bozobooks/data/googleapi-config" -}}
+            export googleapikey="{{ .Data.data.googleapikey }}"
+          {{- end }}
       labels:
         app: book-info-service
         namespace: bozo-book-library-dev

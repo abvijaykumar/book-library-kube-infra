@@ -10,7 +10,7 @@ EOF
 
 vault write auth/kubernetes/role/bozobooks-app \
     bound_service_account_names=bozobooks-app \
-    bound_service_account_namespaces=default \
+    bound_service_account_namespaces=bozo-book-library-dev \
     policies=bozobooks-app-policy \
     ttl=24h
 

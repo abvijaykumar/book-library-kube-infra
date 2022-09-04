@@ -21,7 +21,7 @@ spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-library-ui-service
-          image: abvijaykumar/bozo-book-library-ui-service:prodv17
+          image: abvijaykumar/bozo-book-library-ui-service:64
           imagePullPolicy: Always
           ports:
             - containerPort: 80

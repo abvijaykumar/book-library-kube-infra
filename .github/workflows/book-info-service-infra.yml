@@ -1,6 +1,5 @@
-# This is a basic workflow to help you get started with Actions
 
-name: Deply Book Info Service with the update on Build Number
+name: Deploy Book Info Service with the update on Build Number
 
 # Controls when the workflow will run
 on:
@@ -9,18 +8,13 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  DevDeploy:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    environment: development
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
       # Runs a set of commands using the runners shell
       - name: Update the Build number
@@ -36,3 +30,4 @@ jobs:
           masterBranchName: 'main'
           branch: 'main'
           message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{ github.event.client_payload.buildnumber }}' 
+  

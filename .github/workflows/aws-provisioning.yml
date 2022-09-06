@@ -1,6 +1,9 @@
 name: Deploy Infrastructure
 
 on:
+  repository_dispatch:
+    types: deploy-book-info-service-infra-updated-build
+  workflow_dispatch:
   push:
     branches:
       - master

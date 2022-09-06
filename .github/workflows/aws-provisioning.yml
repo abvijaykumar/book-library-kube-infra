@@ -16,6 +16,7 @@ jobs:
       run: |
         cd prod
         cd aws
+        ls -la
 
     - name: Terraform Init
       uses: hashicorp/terraform-github-actions/init@v0.4.0

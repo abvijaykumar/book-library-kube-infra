@@ -1,15 +1,13 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: book-library-service-deployments
   namespace: bozo-book-library-dev
-
   labels: 
     application: bozo-book-library  
 spec:
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
       app: book-library-service
       namespace: bozo-book-library-dev

@@ -28,7 +28,7 @@ spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-info-service
-          image: abvijaykumar/bozo-book-info-service:70
+          image: abvijaykumar/bozo-book-info-service:73
           args:
             - sh
             - '-c'

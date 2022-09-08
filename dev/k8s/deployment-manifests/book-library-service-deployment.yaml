@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   name: book-library-service-deployments
   namespace: bozo-book-library-dev
-  labels: 
-    application: bozo-book-library  
+  labels:
+    application: bozo-book-library
 spec:
   replicas: 1
   selector:

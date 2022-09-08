@@ -1,4 +1,12 @@
 namespace: bozo-book-library
 
-book-library: 
+bozobooks-ui-service:
+  results-per-page: "10"
+book-info-service:
+  google-api-url: "https://www.googleapis.com/books/v1/volumes"
+book-library-service: 
+  database:
+    db-name: "postgres"
+    redis-host: "redis://redis-cache-service.bozo-book-library-dev.svc.cluster.local:6379"
+    pv-path: "/Users/vijaykumarab/mnt/data"
 

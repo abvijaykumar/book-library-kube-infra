@@ -22,18 +22,4 @@ spec:
         - name: redis-cache-service
           image: redis
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-cache-service
-  namespace: bozo-book-library-dev
-  labels: 
-    application: bozo-book-library  
-spec:
-  selector:
-    app: redis-cache-service
-    namespace: bozo-book-library-dev
-  ports:
-    - port: 6379
-      targetPort: 6479
+

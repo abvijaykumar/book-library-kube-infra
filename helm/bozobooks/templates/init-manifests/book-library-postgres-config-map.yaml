@@ -2,10 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name:  book-library-postgres-db-config
-  namespace: bozo-book-library-dev
+  namespace: {{.Values.namespace}}
   labels:
     app: book-library-postgres-db
 data:
-  POSTGRES_DB: "postgres"
+  POSTGRES_DB: {{.Values.book-library-service.database.db-name}}
   POSTGRES_USER: "postgres"
   POSTGRES_PASSWORD: ""

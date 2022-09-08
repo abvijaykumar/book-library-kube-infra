@@ -4,16 +4,6 @@ kind: Deployment
 metadata:
   name: book-library-service-deployments
   namespace: bozo-book-library-dev
-  annotations:
-    vault.hashicorp.com/agent-inject: 'true'
-    vault.hashicorp.com/role: 'bozobooks'
-    vault.hashicorp.com/agent-inject-secret-config: 'kv/secret/bozobooks/postgres-config'
-    vault.hashicorp.com/agent-inject-template-config: |
-          {{ with secret "kv/secret/bozobooks/postgres-config" -}}
-            export POSTGRES_DB="{{ .Data.data.dbname }}"
-            export POSTGRES_USER="{{ .Data.data.user }}"
-            export POSTGRES_PASSWORD="{{ .Data.data.password }}"
-          {{- end }}
 
   labels: 
     application: bozo-book-library  
@@ -25,6 +15,17 @@ spec:
       namespace: bozo-book-library-dev
   template:
     metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/role: 'bozobooks'
+        vault.hashicorp.com/agent-inject-secret-config: 'kv/secret/bozobooks/postgres-config'
+        vault.hashicorp.com/agent-inject-template-config: |
+              {{ with secret "kv/secret/bozobooks/postgres-config" -}}
+                export POSTGRES_DB="{{ .Data.data.dbname }}"
+                export POSTGRES_USER="{{ .Data.data.user }}"
+                export POSTGRES_PASSWORD="{{ .Data.data.password }}"
+              {{- end }}
+
       labels: 
         app: book-library-service
         namespace: bozo-book-library-dev
@@ -32,7 +33,11 @@ spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-library-service
-          image: abvijaykumar/bozo-book-library-service:71
+          image: abvijaykumar/bozo-book-library-service:76
+          args:
+            - sh
+            - '-c'
+            - source /vault/secrets/config && ./booklibraryservice -Dquarkus.http.host=0.0.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

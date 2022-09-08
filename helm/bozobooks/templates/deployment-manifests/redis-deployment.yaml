@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cache-deployments
+  namespace: bozo-book-library-dev
+  labels: 
+    application: bozo-book-library  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-cache-service
+      namespace: bozo-book-library-dev
+  template:
+    metadata:
+      labels:
+        app: redis-cache-service
+        namespace: bozo-book-library-dev
+    spec:
+      serviceAccountName: bozobooks-app
+      containers:
+        - name: redis-cache-service
+          image: redis
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cache-service
+  namespace: bozo-book-library-dev
+  labels: 
+    application: bozo-book-library  
+spec:
+  selector:
+    app: redis-cache-service
+    namespace: bozo-book-library-dev
+  ports:
+    - port: 6379
+      targetPort: 6479

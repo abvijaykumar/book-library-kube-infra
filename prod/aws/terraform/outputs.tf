@@ -10,7 +10,7 @@ output "cluster_endpoint" {
 
 output "cluster_security_group_id" {
   description = "Security group ids attached to the cluster control plane"
-  value       = module.bozobooks_eks.cluster_security_group_id
+  value       = module.bozobooks_weks.cluster_security_group_id
 }
 
 output "region" {

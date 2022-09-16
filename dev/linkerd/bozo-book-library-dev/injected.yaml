@@ -1,0 +1,369 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"generation":2,"labels":{"app.kubernetes.io/instance":"bozobooks","application":"bozo-book-library"},"name":"book-info-service-deployments","namespace":"bozo-book-library-dev","resourceVersion":"1335813","uid":"786944fa-aad4-4a5c-a105-7fae630f93da"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"book-info-service","namespace":"bozo-book-library-dev"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled","vault.hashicorp.com/agent-inject":"true","vault.hashicorp.com/agent-inject-secret-config":"bozobooks/data/googleapi-config","vault.hashicorp.com/agent-inject-template-config":"{{ with secret \"bozobooks/data/googleapi-config\" -}}\n  export googleapikey=\"{{ .Data.data.googleapikey }}\"\n{{- end }}\n","vault.hashicorp.com/role":"bozobooks-app"},"labels":{"app":"book-info-service","namespace":"bozo-book-library-dev"}},"spec":{"containers":[{"args":["sh","-c","source /vault/secrets/config \u0026\u0026 ./bookinfoservice -Dquarkus.http.host=0.0.0.0"],"image":"abvijaykumar/bozo-book-info-service:73","imagePullPolicy":"Always","name":"book-info-service","ports":[{"containerPort":8080,"protocol":"TCP"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"bozobooks-app","serviceAccountName":"bozobooks-app","terminationGracePeriodSeconds":30}}},"status":{"conditions":[{"message":"ReplicaSet \"book-info-service-deployments-66b548cbd4\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"message":"Deployment does not have minimum availability.","reason":"MinimumReplicasUnavailable","status":"False","type":"Available"}],"observedGeneration":2,"replicas":1,"unavailableReplicas":1,"updatedReplicas":1}}
+    generation: 3
+    labels:
+      app.kubernetes.io/instance: bozobooks
+      application: bozo-book-library
+    name: book-info-service-deployments
+    namespace: bozo-book-library-dev
+    resourceVersion: "1389696"
+    uid: 786944fa-aad4-4a5c-a105-7fae630f93da
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: book-info-service
+        namespace: bozo-book-library-dev
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          linkerd.io/inject: enabled
+          vault.hashicorp.com/agent-inject: "true"
+          vault.hashicorp.com/agent-inject-secret-config: bozobooks/data/googleapi-config
+          vault.hashicorp.com/agent-inject-template-config: |
+            {{ with secret "bozobooks/data/googleapi-config" -}}
+              export googleapikey="{{ .Data.data.googleapikey }}"
+            {{- end }}
+          vault.hashicorp.com/role: bozobooks-app
+        labels:
+          app: book-info-service
+          namespace: bozo-book-library-dev
+      spec:
+        containers:
+        - args:
+          - sh
+          - -c
+          - source /vault/secrets/config && ./bookinfoservice -Dquarkus.http.host=0.0.0.0
+          image: abvijaykumar/bozo-book-info-service:73
+          imagePullPolicy: Always
+          name: book-info-service
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: bozobooks-app
+        serviceAccountName: bozobooks-app
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    - message: ReplicaSet "book-info-service-deployments-687d69f784" is progressing.
+      reason: ReplicaSetUpdated
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    replicas: 2
+    unavailableReplicas: 2
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"generation":4,"labels":{"app.kubernetes.io/instance":"bozobooks","application":"bozo-book-library"},"name":"book-library-postgres-db","namespace":"bozo-book-library-dev","resourceVersion":"1374085","uid":"f89693be-ec76-4fff-aabb-28781c8d6459"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"book-library-postgres-db"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app":"book-library-postgres-db"}},"spec":{"containers":[{"image":"postgres:10.4","imagePullPolicy":"IfNotPresent","name":"postgres","ports":[{"containerPort":5432,"protocol":"TCP"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"postgredb"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"bozobooks-app","serviceAccountName":"bozobooks-app","terminationGracePeriodSeconds":30,"volumes":[{"name":"postgredb","persistentVolumeClaim":{"claimName":"book-library-postgres-db-pv-claim"}}]}}},"status":{"availableReplicas":1,"conditions":[{"message":"ReplicaSet \"book-library-postgres-db-546c699d99\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"}],"observedGeneration":4,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+    generation: 5
+    labels:
+      app.kubernetes.io/instance: bozobooks
+      application: bozo-book-library
+    name: book-library-postgres-db
+    namespace: bozo-book-library-dev
+    resourceVersion: "1389799"
+    uid: f89693be-ec76-4fff-aabb-28781c8d6459
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: book-library-postgres-db
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          linkerd.io/inject: enabled
+        labels:
+          app: book-library-postgres-db
+      spec:
+        containers:
+        - image: postgres:10.4
+          imagePullPolicy: IfNotPresent
+          name: postgres
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgredb
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: bozobooks-app
+        serviceAccountName: bozobooks-app
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: book-library-postgres-db-pv-claim
+  status:
+    availableReplicas: 1
+    conditions:
+    - message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - message: ReplicaSet "book-library-postgres-db-c9f8fb8d8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 5
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"generation":2,"labels":{"app.kubernetes.io/instance":"bozobooks","application":"bozo-book-library"},"name":"book-library-service-deployments","namespace":"bozo-book-library-dev","resourceVersion":"1335922","uid":"47381a90-c19b-43c5-8714-d48bef8d321c"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"book-library-service","namespace":"bozo-book-library-dev"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled","vault.hashicorp.com/agent-inject":"true","vault.hashicorp.com/agent-inject-secret-config":"bozobooks/data/postgres-config","vault.hashicorp.com/agent-inject-template-config":"{{ with secret \"bozobooks/data/postgres-config\" -}}\n  export dbUser=\"{{ .Data.data.user }}\"\n  export dbPassword=\"{{ .Data.data.password }}\"\n{{- end }}\n","vault.hashicorp.com/role":"bozobooks-app"},"labels":{"app":"book-library-service","namespace":"bozo-book-library-dev"}},"spec":{"containers":[{"args":["sh","-c","source /vault/secrets/config \u0026\u0026 ./booklibraryservice -Dquarkus.http.host=0.0.0.0"],"image":"abvijaykumar/bozo-book-library-service:87","imagePullPolicy":"Always","name":"book-library-service","ports":[{"containerPort":8080,"protocol":"TCP"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"bozobooks-app","serviceAccountName":"bozobooks-app","terminationGracePeriodSeconds":30}}},"status":{"conditions":[{"message":"ReplicaSet \"book-library-service-deployments-74b9d69db\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"message":"Deployment does not have minimum availability.","reason":"MinimumReplicasUnavailable","status":"False","type":"Available"}],"observedGeneration":2,"replicas":1,"unavailableReplicas":1,"updatedReplicas":1}}
+    generation: 3
+    labels:
+      app.kubernetes.io/instance: bozobooks
+      application: bozo-book-library
+    name: book-library-service-deployments
+    namespace: bozo-book-library-dev
+    resourceVersion: "1389692"
+    uid: 47381a90-c19b-43c5-8714-d48bef8d321c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: book-library-service
+        namespace: bozo-book-library-dev
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          linkerd.io/inject: enabled
+          vault.hashicorp.com/agent-inject: "true"
+          vault.hashicorp.com/agent-inject-secret-config: bozobooks/data/postgres-config
+          vault.hashicorp.com/agent-inject-template-config: |
+            {{ with secret "bozobooks/data/postgres-config" -}}
+              export dbUser="{{ .Data.data.user }}"
+              export dbPassword="{{ .Data.data.password }}"
+            {{- end }}
+          vault.hashicorp.com/role: bozobooks-app
+        labels:
+          app: book-library-service
+          namespace: bozo-book-library-dev
+      spec:
+        containers:
+        - args:
+          - sh
+          - -c
+          - source /vault/secrets/config && ./booklibraryservice -Dquarkus.http.host=0.0.0.0
+          image: abvijaykumar/bozo-book-library-service:87
+          imagePullPolicy: Always
+          name: book-library-service
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: bozobooks-app
+        serviceAccountName: bozobooks-app
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    - message: ReplicaSet "book-library-service-deployments-7f6d7d966" is progressing.
+      reason: ReplicaSetUpdated
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    replicas: 2
+    unavailableReplicas: 2
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"generation":3,"labels":{"app.kubernetes.io/instance":"bozobooks","application":"bozo-book-library"},"name":"book-library-ui-deployments","namespace":"bozo-book-library-dev","resourceVersion":"1374286","uid":"b5dfc5cd-2bb5-4cbb-a335-11202f98a7ff"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"book-library-ui-service","namespace":"bozo-book-library-dev"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app":"book-library-ui-service","namespace":"bozo-book-library-dev"}},"spec":{"containers":[{"env":[{"name":"REACT_APP_BOOK_LIB_SERVICE_URL","value":"http://book-library-service-svc.bozo-book-library-dev.svc.cluster.local:8080"},{"name":"REACT_APP_BOOK_INFO_SERVICE_URL","value":"http://book-info-service-svc.bozo-book-library-dev.svc.cluster.local:8080"}],"image":"abvijaykumar/bozo-book-library-ui-service:64","imagePullPolicy":"Always","name":"book-library-ui-service","ports":[{"containerPort":80,"protocol":"TCP"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"bozobooks-app","serviceAccountName":"bozobooks-app","terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"message":"ReplicaSet \"book-library-ui-deployments-57c6f97779\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"}],"observedGeneration":3,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+    generation: 4
+    labels:
+      app.kubernetes.io/instance: bozobooks
+      application: bozo-book-library
+    name: book-library-ui-deployments
+    namespace: bozo-book-library-dev
+    resourceVersion: "1389820"
+    uid: b5dfc5cd-2bb5-4cbb-a335-11202f98a7ff
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: book-library-ui-service
+        namespace: bozo-book-library-dev
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          linkerd.io/inject: enabled
+        labels:
+          app: book-library-ui-service
+          namespace: bozo-book-library-dev
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_BOOK_LIB_SERVICE_URL
+            value: http://book-library-service-svc.bozo-book-library-dev.svc.cluster.local:8080
+          - name: REACT_APP_BOOK_INFO_SERVICE_URL
+            value: http://book-info-service-svc.bozo-book-library-dev.svc.cluster.local:8080
+          image: abvijaykumar/bozo-book-library-ui-service:64
+          imagePullPolicy: Always
+          name: book-library-ui-service
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: bozobooks-app
+        serviceAccountName: bozobooks-app
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - message: ReplicaSet "book-library-ui-deployments-6f6b7fb78b" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"generation":3,"labels":{"app.kubernetes.io/instance":"bozobooks","application":"bozo-book-library"},"name":"redis-cache-deployments","namespace":"bozo-book-library-dev","resourceVersion":"1374117","uid":"d191a585-c1ea-4681-8c3b-b7a8ba0edcdf"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"redis-cache-service","namespace":"bozo-book-library-dev"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app":"redis-cache-service","namespace":"bozo-book-library-dev"}},"spec":{"containers":[{"image":"redis","imagePullPolicy":"Always","name":"redis-cache-service","terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"bozobooks-app","serviceAccountName":"bozobooks-app","terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"message":"ReplicaSet \"redis-cache-deployments-6dc6f79bb8\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"}],"observedGeneration":3,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+    generation: 4
+    labels:
+      app.kubernetes.io/instance: bozobooks
+      application: bozo-book-library
+    name: redis-cache-deployments
+    namespace: bozo-book-library-dev
+    resourceVersion: "1389852"
+    uid: d191a585-c1ea-4681-8c3b-b7a8ba0edcdf
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: redis-cache-service
+        namespace: bozo-book-library-dev
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          linkerd.io/inject: enabled
+        labels:
+          app: redis-cache-service
+          namespace: bozo-book-library-dev
+      spec:
+        containers:
+        - image: redis
+          imagePullPolicy: Always
+          name: redis-cache-service
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: bozobooks-app
+        serviceAccountName: bozobooks-app
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - message: ReplicaSet "redis-cache-deployments-747fdc78f5" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata: {}
+---

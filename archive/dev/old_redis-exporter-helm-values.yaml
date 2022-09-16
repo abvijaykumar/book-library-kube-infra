@@ -1,9 +1,0 @@
-redisAddress: redis://redis-cache-service.bozo-book-library-dev.svc.cluster.local:6379
-serviceMonitor:
-  enabled: true
-  multipleTarget: false
-  namespace: monitoring
-  interval: 30s
-  telemetryPath: /metrics
-  labels:
-    release: prometheus 

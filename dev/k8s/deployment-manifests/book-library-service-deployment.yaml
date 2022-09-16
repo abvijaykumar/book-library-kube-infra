@@ -15,6 +15,7 @@ spec:
     metadata:
       annotations:
         vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/agent-init-first: 'true'
         vault.hashicorp.com/role: bozobooks-app
         vault.hashicorp.com/agent-inject-secret-config: bozobooks/data/postgres-config
         vault.hashicorp.com/agent-inject-template-config: |
@@ -29,7 +30,7 @@ spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-library-service
-          image: abvijaykumar/bozo-book-library-service:86
+          image: abvijaykumar/bozo-book-library-service:87
           args:
             - sh
             - '-c'

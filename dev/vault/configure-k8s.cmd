@@ -1,3 +1,9 @@
+kubectl exec -n vault vault-0 -- vault operator init \
+                                               -key-shares=1 \
+                                               -key-threshold=1 \
+                                               -format=json >        cluster-keys.json
+
+
 vault auth enable kubernetes
 vault write auth/kubernetes/config \
     kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"

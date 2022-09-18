@@ -1,0 +1,49 @@
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+  
+  - name: hashicorp
+    url: https://helm.releases.hashicorp.com
+
+releases:
+  - name: prom-stack
+    namespace: monitoring
+    createNamespace: true
+    chart: prometheus-community/kube-prometheus-stack
+    values: 
+    - ./values/postgres-exporter-helm-values.yaml
+
+  - name: redis-exporter
+    namespace: monitoring
+    createNamespace: true
+    chart: prometheus-community/prometheus-redis-exporter
+    values: 
+    - ./values/redis-exporter-helm-values.yaml
+
+  - name: prometheus-postgres-exporter
+    namespace: monitoring
+    createNamespace: true
+    chart: prometheus-community/prometheus-postgres-exporter
+    values: 
+    - ./values/postgres-exporter-helm-values.yaml
+
+  - name: loki
+    namespace: monitoring
+    createNamespace: true
+    chart: grafana/loki-stack
+    values: 
+    - ./values/bozo-loki-stack-values.yaml
+  
+  - name: vault
+    namespace: vault
+    createNamespace: true
+    chart: hashicorp/vault
+    values: 
+    - ./values/helm-vault-raft-values.yaml
+
+
+
+

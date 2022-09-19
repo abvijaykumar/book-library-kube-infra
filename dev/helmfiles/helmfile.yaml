@@ -13,40 +13,46 @@ repositories:
 
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
+  
+  - name: argocd
+    url: https://argoproj.github.io/argo-helm
 
+helmDefaults:
+  verify: false
+  wait: true
+  waitForJobs: true
+  createNamespace: true
+
+commonLabels:
+  application-name: bozo-book-library
 
 releases:
   - name: prom-stack
     namespace: monitoring
-    createNamespace: true
     chart: prometheus-community/kube-prometheus-stack
     values: 
     - ./values/postgres-exporter-helm-values.yaml
 
   - name: redis-exporter
     namespace: monitoring
-    createNamespace: true
     chart: prometheus-community/prometheus-redis-exporter
     values: 
     - ./values/redis-exporter-helm-values.yaml
 
   - name: prometheus-postgres-exporter
     namespace: monitoring
-    createNamespace: true
     chart: prometheus-community/prometheus-postgres-exporter
     values: 
     - ./values/postgres-exporter-helm-values.yaml
 
   - name: loki
     namespace: monitoring
-    createNamespace: true
     chart: grafana/loki-stack
     values: 
     - ./values/bozo-loki-stack-values.yaml
   
   - name: vault
     namespace: vault
-    createNamespace: true
     chart: hashicorp/vault
     values: 
     - ./values/helm-vault-raft-values.yaml
@@ -54,14 +60,15 @@ releases:
 
   - name: cert-manager
     namespace: cert-manager
-    createNamespace: true
     chart: jetstack/cert-manager
     values: 
     - ./values/cert-manager-values.yaml
 
   - name: ingress-nginx
     namespace: ingress-nginx
-    createNamespace: true
     chart: ingress-nginx/ingress-nginx
 
+  - name: argocd
+    namespace: argocd
+    chart: argo/argo-cd
 

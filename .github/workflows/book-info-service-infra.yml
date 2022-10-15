@@ -24,7 +24,6 @@ jobs:
       - name: Update Image Version in the yaml
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: 'dev/k8s/deployment-manifests/book-info-service-deployment.yaml'
           valueFile: 'dev/bozobooks-manifests/deployment-manifests/book-info-service-deployment.yaml'
           propertyPath: 'spec.template.spec.containers[0].image'
           value: 'abvijaykumar/bozo-book-info-service:${{ github.event.client_payload.buildnumber}}'

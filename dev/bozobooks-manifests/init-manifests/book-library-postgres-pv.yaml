@@ -16,7 +16,7 @@ metadata:
     type: local
     app: postgres
 spec:
-  storageClassName: local-path
+  storageClassName: hostpath
   capacity:
     storage: 5Gi
   accessModes:
@@ -30,7 +30,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - lima-rancher-desktop
+          - docker-desktop
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -40,7 +40,7 @@ metadata:
   labels:
     app: book-library-postgres-db
 spec:
-  storageClassName: local-path
+  storageClassName: hostpath
   accessModes:
     - ReadWriteMany
   resources:

@@ -6,3 +6,4 @@ prod/aws/terraform/terraform.tfstate
 prod/aws/terraform/terraform.tfstate.backup
 prod/aws/terraform/.terraform.lock.hcl
 .terraform
+dev/opentelemetry

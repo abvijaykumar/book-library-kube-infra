@@ -1,0 +1,34 @@
+
+# Base collector configuration.
+# Supports templating. To escape existing instances of {{ }}, use {{` <original content> `}}.
+# For example, {{ REDACTED_EMAIL }} becomes {{` {{ REDACTED_EMAIL }} `}}.
+mode: "deployment"
+config:
+  exporters:
+    jaeger:
+      endpoint: tracing.jaeger-collector.svc.cluster.local:14250
+      tls:
+        insecure: true
+  extensions:
+    # The health_check extension is mandatory for this chart.
+    # Without the health_check extension the collector will fail the readiness and liveliness probes.
+    # The health_check extension can be modified, but should never be removed.
+    health_check:
+  processors:
+    batch:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: otel-collector:4317  
+  service:
+    extensions:
+      - health_check
+    pipelines:
+      traces:
+        exporters:
+          - jaeger
+        processors:
+          - batch
+        receivers:
+          - otlp

@@ -1,0 +1,4 @@
+allInOne:
+  enabled: true
+  image: jaegertracing/all-in-one
+  pullPolicy: IfNotPresent

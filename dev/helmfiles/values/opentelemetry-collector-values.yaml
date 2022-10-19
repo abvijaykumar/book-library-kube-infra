@@ -1,0 +1,26 @@
+
+# Base collector configuration.
+# Supports templating. To escape existing instances of {{ }}, use {{` <original content> `}}.
+# For example, {{ REDACTED_EMAIL }} becomes {{` {{ REDACTED_EMAIL }} `}}.
+mode: "deployment"
+config:
+  receivers:
+
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+
+  processors:
+    batch: {}
+
+  exporters:
+    zipkin:
+      endpoint: "http://zipkin.zipkin.svc.cluster.local:9411/api/v2/spans"
+
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [zipkin]

@@ -1,10 +1,10 @@
 
-name: Deploy Book Info Service with the update on Build Number
+name: Deploy Book UI Service with the update on Build Number
 
 # Controls when the workflow will run
 on:
   repository_dispatch:
-    types: deploy-book-info-service-infra-updated-build
+    types: deploy-bozo-book-library-ui-service-Infra-updated-build
 
 jobs:
   DevDeploy:
@@ -22,10 +22,10 @@ jobs:
       - name: Update Image Version in the yaml
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: 'dev/bozobooks-manifests/deployment-manifests/book-info-service-deployment.yaml'
+          valueFile: 'dev/bozobooks-manifests/deployment-manifests/book-library-ui-deployment.yaml'
           propertyPath: 'spec.template.spec.containers[0].image'
-          value: 'abvijaykumar/bozo-book-info-service:${{ github.event.client_payload.buildnumber}}'
+          value: 'abvijaykumar/bozo-book-library-ui-service:${{ github.event.client_payload.buildnumber}}'
           masterBranchName: 'main'
           branch: 'main'
-          message: 'Update Image Version to abvijaykumar/bozo-book-info-service:${{ github.event.client_payload.buildnumber }}' 
+          message: 'Update Image Version to abvijaykumar/bozo-book-library-ui-service:${{ github.event.client_payload.buildnumber }}' 
   

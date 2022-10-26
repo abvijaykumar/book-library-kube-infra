@@ -33,11 +33,11 @@ spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-library-ui-service
-          image: abvijaykumar/bozo-book-library-ui-service:64
+          image: abvijaykumar/bozo-book-library-ui-service:122
           args:
             - sh
             - '-c'
-            - source /vault/secrets/config && ./npm start
+            - source /vault/secrets/config && npm start
           imagePullPolicy: Always
           ports:
             - containerPort: 80

@@ -33,14 +33,14 @@ spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-library-ui-service
-          image: abvijaykumar/bozo-book-library-ui-service:122
+          image: abvijaykumar/bozo-book-library-ui-service:125
           args:
             - sh
             - '-c'
             - source /vault/secrets/config && npm start
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 3000
           env:
             - name: REACT_APP_BOOK_LIB_SERVICE_URL
               value: http://book-library-service-svc.bozo-book-library-dev.svc.cluster.local:8080

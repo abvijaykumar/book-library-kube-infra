@@ -1,5 +1,5 @@
 apiVersion: networking.k8s.io/v1
-kind: Ingress 
+kind: Ingress
 metadata:
   name: bozo-book-library-ingress
   namespace: bozo-book-library-dev
@@ -20,20 +20,19 @@ spec:
         backend:
           service:
             name:  book-library-ui-svc
-            port: 
-              number: 80
+            port:
+              number: 3000
       - path: /bookinfo
         pathType: Prefix
         backend:
           service:
             name:  book-info-service-svc
-            port: 
+            port:
               number: 8080
       - path: /booklib
         pathType: Prefix
         backend:
           service:
             name:  book-library-service-svc
-            port: 
-              number: 8080        
-    
+            port:
+              number: 8080

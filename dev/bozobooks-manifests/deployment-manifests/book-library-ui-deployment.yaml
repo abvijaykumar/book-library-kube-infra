@@ -1,14 +1,13 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: book-library-ui-deployments
   namespace: bozo-book-library-dev
-  labels: 
-    application: bozo-book-library  
+  labels:
+    application: bozo-book-library
 spec:
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
       app: book-library-ui-service
       namespace: bozo-book-library-dev
@@ -26,14 +25,14 @@ spec:
             export REACT_APP_FIREBASE_APP_ID="{{ .Data.data.appId }}"
             export REACT_APP_FIREBASE_MEASUREMENT_ID="{{ .Data.data.measurementId }}"
           {{- end }}
-      labels: 
+      labels:
         app: book-library-ui-service
         namespace: bozo-book-library-dev
     spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-library-ui-service
-          image: abvijaykumar/bozo-book-library-ui-service:125
+          image: abvijaykumar/bozo-book-library-ui-service:129
           args:
             - sh
             - '-c'

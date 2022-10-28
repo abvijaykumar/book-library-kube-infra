@@ -1,10 +1,10 @@
 
-name: Deploy Book Info Service with the update on Build Number
+name: Book Info Service Build Number in K8s Manifest
 
 # Controls when the workflow will run
 on:
   repository_dispatch:
-    types: deploy-book-info-service-infra-updated-build
+    types: update-book-info-service-build-number
 
 jobs:
   DevDeploy:

@@ -1,9 +1,9 @@
 
-name: Deploy Book Library Service with the update on Build Number
+name: Book Library Service Build Number in K8s Manifest
 
 on:
   repository_dispatch:
-    types: deploy-book-library-service-infra-updated-build
+    types: update-book-library-service-build-number
   workflow_dispatch:
 
 jobs:

@@ -1,10 +1,10 @@
 
-name: Deploy Book UI Service with the update on Build Number
+name: Book UI Service Build Number in K8s Manifest
 
 # Controls when the workflow will run
 on:
   repository_dispatch:
-    types: deploy-bozo-book-library-ui-service-Infra-updated-build
+    types: update-book-ui-service-build-number
 
 jobs:
   DevDeploy:

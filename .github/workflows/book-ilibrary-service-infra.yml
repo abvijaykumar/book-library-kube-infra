@@ -1,11 +1,9 @@
 
-name: Deploy Book Info Service with the update on Build Number
+name: Deploy Book Library Service with the update on Build Number
 
-# Controls when the workflow will run
 on:
   repository_dispatch:
     types: deploy-book-library-service-infra-updated-build
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -16,7 +14,6 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      # Runs a set of commands using the runners shell
       - name: Update the Build number
         run: |
           echo "Updating the Build Number: ${{github.event.client_payload.buildnumber}}"
@@ -24,7 +21,7 @@ jobs:
       - name: Update Image Version in the yaml
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: 'dev/k8s/deployment-manifests/book-library-service-deployment.yaml'
+          valueFile: 'dev/bozobooks-manifests/deployment-manifests/book-library-service-deployment.yaml'
           propertyPath: 'spec.template.spec.containers[0].image'
           value: 'abvijaykumar/bozo-book-library-service:${{ github.event.client_payload.buildnumber}}'
           masterBranchName: 'main'

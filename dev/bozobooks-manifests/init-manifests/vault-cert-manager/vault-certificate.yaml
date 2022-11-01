@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bozobooks-com
+  namespace: bozo-book-library-dev
+spec:
+  secretName: bozobooks-com-tls
+  issuerRef:
+    name: vault-issuer
+  commonName: www.bozobooks.com
+  dnsNames:
+  - www.bozobooks.com

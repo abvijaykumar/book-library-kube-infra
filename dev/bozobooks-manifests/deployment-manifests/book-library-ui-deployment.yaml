@@ -42,6 +42,6 @@ spec:
             - containerPort: 3000
           env:
             - name: REACT_APP_BOOK_LIB_SERVICE_URL
-              value: http://book-library-service-svc.bozo-book-library-dev.svc.cluster.local:8080
+              value: https://book-library-service-svc.bozo-book-library-dev.svc.cluster.local:8080
             - name: REACT_APP_BOOK_INFO_SERVICE_URL
-              value: http://book-info-service-svc.bozo-book-library-dev.svc.cluster.local:8080
+              value: https://book-info-service-svc.bozo-book-library-dev.svc.cluster.local:8080

@@ -5,14 +5,14 @@ metadata:
   namespace: bozo-book-library-dev
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "bozo-letsencrypt-issuer-dev"
+    cert-manager.io/issuer: "vault-issuer"
 spec:
   tls:
     - hosts:
-      - bozobooks.com
-      secretName: bozo-letsencrypt-issuer-dev
+      - www.bozobooks.com
+      secretName: issuer-token
   rules:
-  - host: bozobooks.com
+  - host: www.bozobooks.com
     http:
       paths:
       - path: /

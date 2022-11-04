@@ -25,8 +25,8 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 
-helm upgrade -i --create-namespace -n opentelemetry opentelemetry-collector open-telemetry/opentelemetry-collector --values ./values/opentelemetry-collector-values.yaml
-helm upgrade -i --create-namespace -n opentelemetry opentelemetry-operator open-telemetry/opentelemetry-operator --values ./values/opentelemetry-operator-values.yaml
+helm upgrade -i --create-namespace -n opentelemetry opentelemetry open-telemetry/opentelemetry-collector --values ./values/opentelemetry-collector-values.yaml
+helm upgrade -i --create-namespace -n opentelemetry opentelemetry open-telemetry/opentelemetry-operator --values ./values/opentelemetry-operator-values.yaml
 
 # helm upgrade -i  --create-namespace -n jaeger-operator jaeger-operator jaegertracing/jaeger-operator --values ./values/jaeger-operator-values.yaml
 # helm upgrade -i  --create-namespace -n jaeger jaeger jaegertracing/jaeger --values ./values/jaeger-values.yaml

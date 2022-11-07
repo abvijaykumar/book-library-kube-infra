@@ -14,16 +14,18 @@ helm repo add openzipkin https://openzipkin.github.io/zipkin
 
 helm repo update
 
-helm upgrade -i  -n monitoring --create-namespace prometheus prometheus-community/kube-prometheus-stack 
+helm upgrade -i  --create-namespace -n monitoring prometheus prometheus-community/kube-prometheus-stack --values ./values/kube-prometheus-stack-helm-values.yaml
 helm upgrade -i  --create-namespace -n monitoring redis-exporter prometheus-community/prometheus-redis-exporter --values ./values/redis-exporter-helm-values.yaml
 helm upgrade -i  --create-namespace -n monitoring postgres-exporter prometheus-community/prometheus-postgres-exporter --values ./values/postgres-exporter-helm-values.yaml
 helm upgrade -i  --create-namespace -n monitoring loki grafana/loki-stack --values ./values/loki-stack-values.yaml
-helm upgrade -i  --create-namespace -n argocd argocd/argo-cd
-helm upgrade -i  --create-namespace -n vault vault hashicorp/vault   --values ./values/vault-raft-values.yaml
 kubectl patch ds -n monitoring prometheus-prometheus-node-exporter --type "json" -p '[{"op": "remove", "path" : "/spec/template/spec/containers/0/volumeMounts/2/mountPropagation"}]'
+
+
+
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
+helm upgrade -i  --create-namespace -n argocd argocd/argo-cd
+helm upgrade -i  --create-namespace -n vault vault hashicorp/vault   --values ./values/vault-raft-values.yaml
 
 helm upgrade -i --create-namespace -n opentelemetry opentelemetry open-telemetry/opentelemetry-collector --values ./values/opentelemetry-collector-values.yaml
 helm upgrade -i --create-namespace -n opentelemetry opentelemetry open-telemetry/opentelemetry-operator --values ./values/opentelemetry-operator-values.yaml

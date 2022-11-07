@@ -32,7 +32,7 @@ spec:
       serviceAccountName: bozobooks-app
       containers:
         - name: book-library-ui-service
-          image: abvijaykumar/bozo-book-library-ui-service:152
+          image: abvijaykumar/bozo-book-library-ui-service:154
           args:
             - sh
             - '-c'
